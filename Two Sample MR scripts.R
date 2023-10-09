@@ -1,0 +1,16 @@
+install.packages("remotes")
+library(remotes)
+install_github("MRCIEU/TwoSampleMR")
+
+
+# Get instruments
+exposure_dat <- extract_instruments("ieu-a-2")
+
+# Get effects of instruments on outcome
+outcome_dat <- extract_outcome_data(snps=exposure_dat$SNP, outcomes = "ieu-a-7")
+
+# Harmonise the exposure and outcome data
+dat <- harmonise_data(exposure_dat, outcome_dat)
+
+# Perform MR
+res <- mr(dat)
